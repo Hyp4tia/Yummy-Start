@@ -33,10 +33,9 @@ Record known blockers, who or what can resolve them if known, or none confirmed.
 
 ## Task-specific user instructions
 
-Record direct corrections or requirements limited to this task, with a short
-source quote or paraphrase and their scope. A task-specific exception does not
-replace a lasting project rule. Link to applicable lasting rules in `AGENTS.md`
-instead of copying them. Do not promote ambiguous feedback to a permanent rule.
+Record only requirements that apply to this task, with a short source quote or
+paraphrase. Keep broader project guidance in its existing instruction files.
+When the scope is unclear, treat the requirement as task-specific.
 
 ## Sources and decisions
 

@@ -20,7 +20,7 @@ LEGACY_FOLDERS = {
 }
 PACKAGE = (
     "SKILL.md", "assets/LICENSE", "references/foundation.md", "references/design.md",
-    "references/portability.md", "references/learning.md", "scripts/bootstrap.py",
+    "references/portability.md", "scripts/bootstrap.py",
     "assets/work/TASK-TEMPLATE.md",
 ) + tuple("assets/foundation/" + name for name in FOUNDATION)
 RESERVED = {"con", "prn", "aux", "nul"} | {

@@ -238,6 +238,11 @@ class BootstrapTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             helper.bootstrap(link, SOURCE)
 
+    def test_foundation_bundle_separates_feedback_learning(self):
+        self.assertNotIn("references/learning.md", helper.PACKAGE)
+        self.assertNotIn("Learn from user feedback", (SOURCE / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertTrue((REPO / "skills/yummy-learning/SKILL.md").is_file())
+
     def test_package_is_complete_and_refuses_to_replace_archive(self):
         path = Path(self.temp.name) / "yummy.zip"
         packager = REPO / "scripts/package.py"

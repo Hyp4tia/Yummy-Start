@@ -10,6 +10,9 @@ components: {}
 
 ## Overview
 
+This document owns verified visual tokens and visual rules. Task records and
+other project documents should link here instead of maintaining competing values.
+
 Visual relevance, brand identity, and mood have not been established. Empty
 token categories mean no verified values are available. Populate them only
 from this project's actual implementation or supplied design evidence during

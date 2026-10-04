@@ -6,6 +6,11 @@ structure while preserving everything already there.**
 Use it for business, family projects, research, content, software, or whatever
 you're working on. Start small. Specialize downward only when complexity earns it.
 
+People start with the project's `README.md`, then its goals in `PROJECT.md` and
+the overview in `STATUS.md`. Agents start with applicable `AGENTS.md` instructions,
+then read goals, status, and their current task. Decisions and design guidance
+are loaded when relevant.
+
 ## Get started
 
 Ask an assistant with project filesystem access:
@@ -44,15 +49,17 @@ create-only helper rather than extracting an archive over existing files.
 
 ```text
 project/
+├── README.md                 Human starting point and worked example
 ├── AGENTS.md                 How agents operate
 ├── PROJECT.md                What we're trying to accomplish
 ├── STATUS.md                 Where things stand now
 ├── DECISIONS.md              Important choices and their reasons
 ├── DESIGN.md                 Verified visual tokens and design rules
-├── temp-inbox/               New material awaiting classification
-├── areas-sections/           Natural major areas of this project
+├── inbox/                    New material awaiting classification
+├── areas/                    Long-lived subjects or responsibilities
 ├── resources/                New supporting files and references
-├── active-queued-work/       Normalized spelling of the work folder
+├── work/                     Task records, not deliverable copies
+│   ├── TASK-TEMPLATE.md       Reusable task form; not an actual task
 │   ├── queued/
 │   ├── active/
 │   └── completed/
@@ -66,9 +73,70 @@ The AI reads actual project evidence and prepares initial content for missing
 documents. Unknown goals, status, decisions, and design values stay explicit.
 Existing files stay where they are; the new documents can link to them.
 
+The short folder names apply to new setups. Existing `temp-inbox/`,
+`areas-sections/`, or `active-queued-work/` are reused without renaming or creating
+parallel folders. Setup reports its chosen routes, and new default documents
+match them. If both naming schemes exist, the short names receive new paths and
+the ambiguity is reported; existing project instructions still apply.
+
 Root `AGENTS.md` applies project-wide. Add a local `AGENTS.md` when an area needs
 its own rules, then repeat deeper only as needed. No predefined departments,
 generic task queues, or elaborate hierarchy are imposed.
+
+## Where things belong
+
+| Place | Purpose | Example |
+| --- | --- | --- |
+| `inbox/` | Incoming, unclassified material | A new meeting note |
+| `areas/` | Long-lived subjects or responsibilities | Venue planning |
+| `resources/` | Inputs and references | Venue requirements or a research article |
+| `work/` | Task records with state and next action | A record for comparing venues |
+| `outputs/` | Review-ready or finished artifacts | The actual venue comparison PDF |
+| `archive/` | Retired material from later authorized work | A superseded plan |
+
+### Why outputs and completed both exist
+
+`work/completed/` holds the record of what was done and how completion was
+verified. `outputs/` holds the artifact someone can use or review. For example,
+`work/completed/001-compare-venues.md` links to `outputs/venue-comparison.pdf`.
+Keep one copy of the artifact. A task may complete without producing a file,
+and a review-ready output may exist while its task is still active. Link to
+application code or other deliverables at their required paths instead of
+moving them into outputs.
+
+## One owner for each fact
+
+| Owner | Facts |
+| --- | --- |
+| `PROJECT.md` | Goals, scope, constraints, success criteria |
+| Task record or existing work-system entry | Progress, next action, blockers, completion evidence |
+| `STATUS.md` | Short project overview linking to task records |
+| `DECISIONS.md` | Confirmed important choices and rationale |
+| `DESIGN.md` | Verified visual tokens and rules |
+| `AGENTS.md` | Operating rules and reading order |
+| `README.md` | Human navigation and explanations |
+
+Link to the owner instead of maintaining competing copies. Surface conflicting
+evidence before resolving it. Use a project's existing task system when present.
+
+## Start and resume tasks
+
+The [task template](skills/yummy/assets/work/TASK-TEMPLATE.md) is installed as
+`work/TASK-TEMPLATE.md`. It records a stable ID, state, owner if known, area,
+intended outcome, completion criteria, progress, next action, blockers, sources,
+decisions, deliverable readiness, and completion evidence. No example tasks are
+created during setup.
+
+Resume a task by reading its next action and blockers. In later authorized work,
+keep its record current, refresh the short status overview, and record significant
+confirmed decisions. Move task records between state folders only within the
+authorized work scope, keeping ID/filename stable and updating links. Complete a
+task only after verifying its criteria and recording evidence.
+
+The [project README template](skills/yummy/assets/foundation/README.md) includes
+a hypothetical family-event example that walks from goals and reference inputs
+through an active task, review-ready artifact, completion record, and confirmed
+decision. The helper renders its folder names to match the actual setup routes.
 
 ## DESIGN.md
 
@@ -92,6 +160,8 @@ for writes. Existing source code, assets, configuration, and Git state stay inta
 
 New material goes to its designated folder. Setup does not reorganize old material
 or authorize ongoing work, document edits, archival, or dependency installation.
+Later authorized project work may maintain records within its own scope; the
+create-only setup rule does not freeze the project forever.
 
 ## Run the helper yourself
 
@@ -105,12 +175,14 @@ python -B skills/yummy/scripts/bootstrap.py --root "/path/to/project"
 
 The target directory must already exist. The helper creates the empty-evidence
 templates; AI-assisted use can prepare tailored content first. `--content-json`
-accepts an object mapping any of the five root filenames to complete UTF-8 text.
+accepts an object mapping any of the five foundation filenames or `README.md`
+to complete UTF-8 text. Supplied content is preserved verbatim; default templates
+are rendered using the selected folder routes.
 Existing destinations always win. `--area research` adds a known major area;
 `--host universal` installs only the shared bundle, `--host claude` only the
 Claude bundle, and `--host all` (default) both. No global installation occurs.
 
-The JSON receipt lists created, preserved, and blocked paths. Exit codes:
+The JSON receipt lists selected routes, routing notes, created, preserved, and blocked paths. Exit codes:
 `0` complete/preview, `2` partial setup, `1` invalid input or unavailable resources.
 Interrupted or partial skill copies are deliberately preserved on rerun; review
 them separately rather than silently mixing versions.

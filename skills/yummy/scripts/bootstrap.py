@@ -9,15 +9,18 @@ import re
 import stat
 import sys
 
-FOUNDATION = ("AGENTS.md", "PROJECT.md", "STATUS.md", "DECISIONS.md", "DESIGN.md")
+FOUNDATION = ("AGENTS.md", "PROJECT.md", "STATUS.md", "DECISIONS.md", "DESIGN.md", "README.md")
 DIRECTORIES = (
-    "temp-inbox", "areas-sections", "resources", "active-queued-work",
-    "active-queued-work/queued", "active-queued-work/active",
-    "active-queued-work/completed", "outputs", "archive",
+    "inbox", "areas", "resources", "work", "work/queued", "work/active",
+    "work/completed", "outputs", "archive",
 )
+LEGACY_FOLDERS = {
+    "inbox": ("temp-inbox",), "areas": ("areas-sections",),
+    "work": ("active-queued-work", "actve-queued-work"),
+}
 PACKAGE = (
     "SKILL.md", "assets/LICENSE", "references/foundation.md", "references/design.md",
-    "references/portability.md", "scripts/bootstrap.py",
+    "references/portability.md", "scripts/bootstrap.py", "assets/work/TASK-TEMPLATE.md",
 ) + tuple("assets/foundation/" + name for name in FOUNDATION)
 RESERVED = {"con", "prn", "aux", "nul"} | {
     prefix + str(number) for prefix in ("com", "lpt") for number in range(1, 10)
@@ -70,20 +73,49 @@ def load_content(path):
     return content
 
 
-def build_plan(root, source, host, areas, content):
+def select_routes(root):
+    routes = {name: name for name in ("inbox", "areas", "resources", "work", "outputs", "archive")}
+    notes = []
+    for name, aliases in LEGACY_FOLDERS.items():
+        existing = [candidate for candidate in (name,) + aliases if occupied(root / candidate)]
+        if not occupied(root / name) and existing:
+            routes[name] = existing[0]
+            notes.append("Reusing " + existing[0] + " for " + name + "; nothing renamed")
+        if len(existing) > 1:
+            notes.append("Multiple folders for " + name + ": " + ", ".join(existing)
+                         + "; new paths use " + routes[name] + "; existing instructions still apply")
+    return routes, notes
+
+
+def route_path(name, routes):
+    first, separator, rest = name.partition("/")
+    return routes.get(first, first) + separator + rest
+
+
+def render_template(data, routes):
+    text = data.decode("utf-8")
+    for role, destination in routes.items():
+        text = text.replace("{{" + role + "}}", destination)
+    return text.encode("utf-8")
+
+
+def build_plan(root, source, host, areas, content, routes):
     # Read and validate the complete bundle before writing any target paths.
     bundle = {name: (source / name).read_bytes() for name in PACKAGE}
     metadata = source / "agents/openai.yaml"
     if metadata.is_file():
         bundle["agents/openai.yaml"] = metadata.read_bytes()
-    entries = {name: ("directory", None) for name in DIRECTORIES}
+    entries = {route_path(name, routes): ("directory", None) for name in DIRECTORIES}
     for area in areas:
-        entries["areas-sections/" + validate_area(area)] = ("directory", None)
+        entries[routes["areas"] + "/" + validate_area(area)] = ("directory", None)
     for name in FOUNDATION:
-        data = content[name].encode("utf-8") if name in content else bundle[
-            "assets/foundation/" + name
-        ]
+        data = content[name].encode("utf-8") if name in content else render_template(
+            bundle["assets/foundation/" + name], routes
+        )
         entries[name] = ("file", data)
+    entries[routes["work"] + "/TASK-TEMPLATE.md"] = (
+        "file", render_template(bundle["assets/work/TASK-TEMPLATE.md"], routes)
+    )
 
     preserved_bundles = []
     blocked_bundles = []
@@ -124,13 +156,15 @@ def bootstrap(root, source, host="all", areas=(), content=None, dry_run=False):
             raise ValueError("Project root has a linked ancestor: " + str(ancestor))
     if not root.is_dir():
         raise ValueError("Project root must be an existing directory: " + str(root))
+    routes, routing_notes = select_routes(root)
     entries, preserved_bundles, blocked_bundles = build_plan(
-        root, source, host, areas, content or {}
+        root, source, host, areas, content or {}, routes
     )
     report = {
         "root": str(root), "dry_run": dry_run, "created": [], "planned": [],
         "preserved": [], "preserved_skill_bundles": preserved_bundles,
         "blocked": blocked_bundles,
+        "routes": routes, "routing_notes": routing_notes,
     }
     ready = []
     for name, (kind, data) in sorted(

@@ -1,5 +1,8 @@
 # Decision log
 
+This document owns confirmed important choices and their rationale. Task
+records and `STATUS.md` should link here instead of copying decision details.
+
 No project decisions recorded yet. Empty means undocumented, not that no
 decisions have ever been made.
 

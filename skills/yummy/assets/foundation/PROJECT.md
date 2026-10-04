@@ -1,5 +1,9 @@
 # Project
 
+This document owns goals, scope, constraints, and success criteria. Task records
+own execution details; `STATUS.md` summarizes them. Keep confirmed choices and
+their rationale in `DECISIONS.md`, and link rather than duplicating those facts.
+
 ## Purpose and intended outcome
 
 Not established yet. Record the user's actual objective and intended result.

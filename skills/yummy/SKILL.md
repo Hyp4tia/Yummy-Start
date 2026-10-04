@@ -29,7 +29,14 @@ documents or silently picking a different project root. Repeated invocations
 fill missing paths only. Do not interpret setup as permission to start project
 work or keep editing its documents afterward.
 
-## Workflow
+## Read project context in order
+
+After applicable agent instructions, read `PROJECT.md` and `STATUS.md`, then the
+current task or existing work-system entry. Read relevant decisions when choices
+matter and design guidance for visual work. Load area guidance and resources
+only as needed. Do not load every document on every assignment.
+
+## Setup workflow
 
 1. Establish the actual target project root from the user's request or the active
    workspace. If there are several plausible targets, ask for the target while
@@ -37,17 +44,22 @@ work or keep editing its documents afterward.
    directory name. Read applicable existing agent instructions first.
 2. Inspect a bounded selection of relevant project files, current documents,
    and user-provided context. Establish known goals, work status, decisions,
-   natural areas, and visual evidence. Avoid secrets and unrelated private data.
+   natural areas, existing folder names, and visual evidence. Avoid secrets and unrelated private data.
    Missing facts stay explicitly unknown; ask only for information that blocks
    a useful setup. Reading a project does not authorize changing it.
-3. Read [the foundation guide](references/foundation.md). Prepare concise,
+3. Read [the foundation guide](references/foundation.md). Use `inbox/`, `areas/`,
+   and `work/` for new setups; reuse existing legacy names without moving or
+   duplicating folders. The helper's dry-run receipt reports its selected routes.
+   Prepare concise,
    evidence-based initial contents for **missing** foundation documents before
-   writing them. Existing files are authoritative within their scope. Preserve
+   writing them, including a human starting-point `README.md` when missing.
+   Give each fact one owning document; status links to detailed task records.
+   Existing files are authoritative within their scope. Preserve
    uncertainty and source paths. Do not invent owners, dates, priorities, past
    decisions, progress, or project-specific rules.
-4. Read [the design guide](references/design.md) for `DESIGN.md`. Extract values
-   from this project's actual styles, brand files, or supplied design evidence.
-   With no evidence, use the empty token template and mark visual rules unknown
+4. With visual context, read [the design guide](references/design.md) for
+   `DESIGN.md`. Extract values from this project's actual styles, brand files,
+   or supplied design evidence. With no evidence, use the empty token template and mark visual rules unknown
    or not applicable. Never transplant another app's styles or guess values.
 5. With Python 3.9+ and filesystem access, run
    [scripts/bootstrap.py](scripts/bootstrap.py), first with `--dry-run`, then
@@ -66,12 +78,17 @@ work or keep editing its documents afterward.
    [AGENTS.md](assets/foundation/AGENTS.md),
    [PROJECT.md](assets/foundation/PROJECT.md),
    [STATUS.md](assets/foundation/STATUS.md),
-   [DECISIONS.md](assets/foundation/DECISIONS.md), and
-   [DESIGN.md](assets/foundation/DESIGN.md).
+   [DECISIONS.md](assets/foundation/DECISIONS.md),
+   [DESIGN.md](assets/foundation/DESIGN.md), and
+   [README.md](assets/foundation/README.md). Create the reusable
+   [TASK-TEMPLATE.md](assets/work/TASK-TEMPLATE.md) in the selected work folder.
+   Render `{{inbox}}`, `{{areas}}`, `{{resources}}`, `{{work}}`, `{{outputs}}`,
+   and `{{archive}}` in new default documents using actual selected routes;
+   do not put example tasks in the queues or modify supplied custom content.
    If the host cannot reliably inspect and write the target, return a scaffold
    bundle or instructions and clearly say it has **not** been installed there.
 7. Verify new paths and that pre-existing files are unchanged. Report the target,
-   created paths, preserved paths, conflicts, design evidence gaps, and the host's
+   created paths, preserved paths, selected routes, conflicts, design evidence gaps, and the host's
    next invocation method. A blocked foundation path means partial setup; do not
    call it complete. Host trust/discovery requirements are separate from copying
    files: explain any remaining manual activation without altering settings.
@@ -79,3 +96,13 @@ work or keep editing its documents afterward.
 Create a nested `AGENTS.md` only when an area needs distinct operating rules.
 Ancestor rules still apply; local instructions narrow their own subtree. Repeat
 the pattern deeper only when justified. Empty folders need no ceremonial rules.
+
+## After setup
+
+Setup finishes after creation and verification. Later authorized work may maintain
+affected task records, the concise status overview, and confirmed decisions within
+that work's scope; existing project rules still apply. Keep task IDs stable,
+record a concrete next action and blockers, verify completion criteria, and link
+to deliverables. A task record in `work/completed/` documents completion; an
+artifact in `outputs/` is the usable result. Neither must duplicate the other.
+Use the project's existing work system when present instead of adding a rival log.

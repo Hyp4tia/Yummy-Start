@@ -39,7 +39,7 @@ class BootstrapTests(unittest.TestCase):
         self.assertEqual(first["result"], "complete")
         for name in helper.FOUNDATION:
             self.assertTrue((self.root / name).is_file())
-        for name in helper.DIRECTORIES + ("areas-sections/research",):
+        for name in helper.DIRECTORIES + ("areas/research",):
             self.assertTrue((self.root / name).is_dir())
         for base in (".agents/skills/yummy", ".claude/skills/yummy"):
             for name in helper.PACKAGE:
@@ -48,6 +48,67 @@ class BootstrapTests(unittest.TestCase):
         second = self.run_setup(areas=["research"])
         self.assertEqual(second["created"], [])
         self.assertEqual(snapshot(self.root), before)
+
+    def test_readme_routes_and_task_template_are_useful_without_seeding_tasks(self):
+        report = self.run_setup()
+        self.assertEqual(report["routes"]["work"], "work")
+        for name in helper.FOUNDATION:
+            self.assertNotIn("{{", (self.root / name).read_text(encoding="utf-8"))
+        readme = (self.root / "README.md").read_text(encoding="utf-8")
+        import re
+        for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", readme):
+            self.assertTrue((self.root / target).is_file(), target)
+        self.assertEqual((self.root / "work/TASK-TEMPLATE.md").read_bytes(),
+                         (SOURCE / "assets/work/TASK-TEMPLATE.md").read_bytes())
+        for state in ("queued", "active", "completed"):
+            self.assertEqual(list((self.root / "work" / state).iterdir()), [])
+
+    def test_legacy_layout_is_reused_without_migration_or_parallel_folders(self):
+        for name in ("temp-inbox", "areas-sections", "active-queued-work/active"):
+            (self.root / name).mkdir(parents=True)
+        record = self.root / "active-queued-work/active/001-existing.md"
+        record.write_bytes(b"Existing task; do not change it")
+        before = snapshot(self.root)
+        report = self.run_setup(areas=["research"])
+        self.assertEqual(report["result"], "complete")
+        self.assertEqual(report["routes"]["work"], "active-queued-work")
+        for name in ("inbox", "areas", "work"):
+            self.assertFalse((self.root / name).exists())
+        self.assertTrue((self.root / "areas-sections/research").is_dir())
+        self.assertTrue((self.root / "active-queued-work/TASK-TEMPLATE.md").is_file())
+        after = snapshot(self.root)
+        for name, digest in before.items():
+            self.assertEqual(after[name], digest)
+        readme = (self.root / "README.md").read_text(encoding="utf-8")
+        self.assertIn("active-queued-work/active/", readme)
+        self.assertIn("temp-inbox/", readme)
+        self.assertIn("areas-sections/", readme)
+        self.assertNotIn("{{", readme)
+        self.assertEqual(self.run_setup(areas=["research"])["created"], [])
+
+    def test_existing_task_template_is_preserved(self):
+        (self.root / "work").mkdir()
+        (self.root / "work/TASK-TEMPLATE.md").write_bytes(b"Custom task template")
+        self.run_setup()
+        self.assertEqual((self.root / "work/TASK-TEMPLATE.md").read_bytes(), b"Custom task template")
+
+    def test_both_layouts_report_ambiguity_without_merging(self):
+        for name in ("work", "active-queued-work"):
+            (self.root / name).mkdir()
+        (self.root / "active-queued-work/old.md").write_bytes(b"Keep at this location")
+        report = self.run_setup(dry_run=True)
+        self.assertEqual(report["routes"]["work"], "work")
+        self.assertTrue(any("Multiple folders for work" in note for note in report["routing_notes"]))
+        self.assertFalse((self.root / "work/TASK-TEMPLATE.md").exists())
+        self.assertEqual((self.root / "active-queued-work/old.md").read_bytes(), b"Keep at this location")
+
+    def test_legacy_path_conflict_is_reported_without_bypassing_it(self):
+        (self.root / "active-queued-work").write_bytes(b"Occupied legacy path")
+        report = self.run_setup()
+        self.assertEqual(report["result"], "partial")
+        self.assertEqual(report["routes"]["work"], "active-queued-work")
+        self.assertFalse((self.root / "work").exists())
+        self.assertEqual((self.root / "active-queued-work").read_bytes(), b"Occupied legacy path")
 
     def test_existing_documents_code_assets_and_git_are_preserved(self):
         for name in helper.FOUNDATION + ("src/app.py", "resources/data.bin", ".git/config"):

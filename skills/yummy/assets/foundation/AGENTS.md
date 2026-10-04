@@ -1,40 +1,61 @@
 # Agent operating rules
 
-## Scope and starting context
+## Scope and reading order
 
-These rules govern this project. Read `PROJECT.md` for goals, `STATUS.md` for
-current state, `DECISIONS.md` for recorded choices, and `DESIGN.md` before visual
-work. Read applicable ancestor instructions and any local `AGENTS.md` before
-working in a subtree. Local guidance adds rules for that subtree.
+These rules govern the project. Read applicable ancestor instructions and local
+`AGENTS.md` for the target subtree first. Local guidance adds rules for its scope.
 
-## Work with evidence
+1. Read `PROJECT.md` for goals and `STATUS.md` for the current overview.
+2. Open the task record or existing work-system entry for this assignment.
+3. Read relevant `DECISIONS.md` entries when choices constrain the work or a new
+   important choice is being made.
+4. Read `DESIGN.md` for visual work. Load relevant resources and area guidance
+   as needed; do not load every project file for every assignment.
 
-Separate confirmed facts, proposals, and unknowns. Use source paths or links
-for important claims. Do not invent progress, decisions, requirements, or design
-values. Follow the user's authorized task scope; ask when a missing fact matters.
+## Ownership of facts
+
+- `PROJECT.md` owns goals, scope, constraints, and success criteria.
+- Task records own detailed progress, blockers, next action, and completion evidence.
+- `STATUS.md` owns a concise overview and links to those records.
+- `DECISIONS.md` owns confirmed important choices and their rationale.
+- `DESIGN.md` owns verified visual tokens and visual rules.
+- `AGENTS.md` owns operating rules. `README.md` helps people navigate.
+
+Link to the owning record instead of maintaining competing versions. If records
+conflict, consult their evidence and flag uncertainty before making changes.
 
 ## Route new material
 
-- New unclassified material: `temp-inbox/`.
-- Major project areas: `areas-sections/`, specialized only as needed.
-- New supporting material: `resources/`; link to existing resources in place.
-- New task records: `active-queued-work/queued/`, `active/`, or `completed/`.
-- Finished or review-ready deliverables: `outputs/`, with readiness stated.
-- Authorized future archival: `archive/`.
+- `{{inbox}}/`: unclassified incoming material.
+- `{{areas}}/`: long-lived subjects or responsibilities; specialize as needed.
+- `{{resources}}/`: supporting inputs; link to existing resources in place.
+- `{{work}}/queued/`, `{{work}}/active/`, `{{work}}/completed/`: task records by state.
+- `{{outputs}}/`: actual deliverables, labeled draft, review-ready, or finished.
+- `{{archive}}/`: retired material moved only in separately authorized work.
 
-Create an area-specific `AGENTS.md` only when distinct operating rules justify
-it. Repeat deeper only when useful. Keep the root foundation small.
+Completed task records explain what was done and checked; outputs are artifacts
+people can use. Link from a task record to its artifact; do not duplicate it.
+Application code and other artifacts with required paths stay at those paths.
+Use `{{work}}/TASK-TEMPLATE.md` for new records, or the project's existing task
+system. Create local `AGENTS.md` only when distinct rules justify the complexity.
 
-## Yummy setup preservation boundary
+## Setup versus authorized ongoing work
 
-Yummy setup creates missing paths only. Preserve every existing file and its
-location, including these documents, code, configuration, assets, and installed
+`/yummy` setup creates missing paths only. Preserve all existing files and their
+locations, including these documents, code, assets, configuration, and installed
 skills. Never append, overwrite, move, rename, delete, or reformat existing
-material during setup. Report occupied or blocked paths. A later project task
-has its own scope; setup alone does not authorize ongoing edits or archival.
+material during setup. Reuse existing legacy folder names and report conflicts.
 
-## Handoffs
+Later project work follows the user's authorized scope and existing project
+rules. Maintain affected task records, update the short `STATUS.md` overview,
+and record significant confirmed decisions as part of that work. Move a task
+record between state folders only when authorized, keep its ID/filename stable,
+and update affected links. Do not treat setup as permission for these later edits.
 
-For separately authorized ongoing work, keep status and important decisions
-current, cite deliverables and evidence, and state unresolved blockers. Verify
-completion before claiming it. Do not promote inferred state to fact.
+## Evidence and handoffs
+
+Separate confirmed facts, proposals, and unknowns. Cite source paths or links
+for important claims. Do not invent owners, dates, progress, decisions, visual
+values, or completion. Before handing off, record the next action and blockers
+in the task record. Mark completed only after checking its completion criteria,
+recording evidence, and linking any deliverables with their actual readiness.

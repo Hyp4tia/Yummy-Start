@@ -15,8 +15,8 @@ are loaded when relevant.
 
 Ask an assistant with project filesystem access:
 
-> Install the yummy skill from https://github.com/Hyp4tia/Yummy-Start/tree/main/skills/yummy,
-> then use it to set up the project at [my actual project path]. Preserve every
+> Install the Yummy skill from the path listed for your assistant below, then
+> use it to set up the project at [my actual project path]. Preserve every
 > existing file and its location.
 
 The first use needs the skill loaded through your assistant's supported installer
@@ -27,7 +27,7 @@ copies and creates missing foundation paths in the selected project.
 | Assistant | Install/load | Invoke |
 | --- | --- | --- |
 | Claude Code | Put the whole `skills/yummy/` bundle in the project's `.claude/skills/yummy/` | `/yummy` |
-| Hermes Agent | `hermes skills install Hyp4tia/Yummy-Start/skills/yummy` | `/yummy` |
+| Hermes Agent | `hermes skills install Hyp4tia/Yummy-Start/skills/yummy-hermes` | `/yummy` |
 | ChatGPT with skills | Use the supported skill installer/selector; local authoring is supported in the desktop app | Select `@yummy`; `/yummy` is a conversational alias once loaded |
 | Codex | Install `skills/yummy`; local project destination is `.agents/skills/yummy/` | `$yummy` or `/skills` |
 | Claude chat or another AI | Upload the complete skill ZIP if supported, or supply the bundle as instructions | Ask it to follow Yummy; native command support depends on the host |
@@ -138,13 +138,36 @@ a hypothetical family-event example that walks from goals and reference inputs
 through an active task, review-ready artifact, completion record, and confirmed
 decision. The helper renders its folder names to match the actual setup routes.
 
-## Optional project learning
+## Learn from your corrections
 
-The foundation bundle focuses on create-only setup. The separate
-[`yummy-learning` companion](skills/yummy-learning/) handles direct user feedback
-as scoped project guidance during later authorized work. It is optional and is
-not copied into new projects by the foundation helper. Its instructions and
-security scan can be reviewed separately.
+Yummy supports document-based project learning during later authorized work:
+
+| What you say | What the agent does |
+| --- | --- |
+| "Always use British English in this project" | Saves a sourced project-wide rule in `AGENTS.md` |
+| "Remember: no animations in the dashboard" | Saves the rule in the dashboard's applicable instructions |
+| "For this report, use a table" | Applies it to that task, without a project-wide preference |
+| "Don't make it so formal" | Adjusts the current work; does not infer a permanent preference |
+| "From now on, use US English instead" | Replaces the conflicting active learned rule at the same scope |
+| "Forget the animation rule" | Removes the identified learned rule in the requested scope |
+| "Don't save this" | Applies the current correction without persistent learning |
+| "Stop remembering my corrections" | Records only a learning-pause marker that future agents honor |
+
+Rules retain their source and scope. The agent avoids duplicate entries and
+briefly reports what it actually remembered. Meaningful replacements are linked
+from `DECISIONS.md`; `AGENTS.md` owns the active rule. Task-specific exceptions
+do not erase lasting project preferences. Repeated corrections may suggest a
+shared skill improvement, but changing Yummy itself requires an explicit request.
+
+This learning needs readable/writable project files and agents that load the
+instructions. It is not model retraining, a background watcher, or global memory
+across unrelated projects. Web pages, documents, and other agents cannot silently
+establish user preferences. `/yummy` setup continues to preserve every existing
+file, including older instruction files and skill installations; the learning
+workflow does not automatically rewrite those installations.
+
+See [the learning guide](skills/yummy/references/learning.md) for scope, sources,
+conflicts, and how learning remains separate from setup.
 
 ## DESIGN.md
 
@@ -197,11 +220,13 @@ them separately rather than silently mixing versions.
 
 ## Repository contents
 
-`skills/yummy/` is the distributable create-only foundation skill. Its references
-explain the foundation, evidence rules, and host activation. Its assets are
-universal document templates. The optional `skills/yummy-learning/` companion
-handles project feedback separately. `tests/` checks setup preservation.
-`scripts/package.py` builds an uploadable ZIP containing only the foundation bundle.
+`skills/yummy/` is the complete portable skill, including project learning, for
+Claude Code, ChatGPT, Codex, and other harnesses. Its references and assets are
+the canonical bundle, and `scripts/package.py` packages it unchanged.
+`skills/yummy-hermes/` is the Hermes-install variant. It keeps Yummy setup
+create-only and omits the separate project-learning instructions that Hermes'
+security scanner blocks. Both use the `/yummy` command. `tests/` checks setup
+preservation and keeps the variants distinct.
 
 ```sh
 python -B -m unittest discover -s tests -v

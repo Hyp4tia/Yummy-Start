@@ -1,0 +1,4 @@
+interface:
+  display_name: "Yummy"
+  short_description: "Set up any project while preserving existing files"
+  default_prompt: "Use $yummy to set up this project's foundation without changing existing files."

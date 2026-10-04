@@ -72,27 +72,6 @@ This is an illustration, not work added to your project:
   links to the same deliverable. `STATUS.md` links to the completion record.
 - An actual venue choice and its reason belong in `DECISIONS.md`.
 
-## How the project learns
-
-During later authorized work, you can say "Always use British English in this
-project" or "Remember: no animations in the dashboard." Clear lasting preferences
-become rules in the appropriate `AGENTS.md`, with their source and scope. The
-agent briefly tells you what it saved. Future agents can follow those rules when
-they read the project instructions.
-
-"For this report, use a table" stays with that task. "Don't make it so formal"
-applies to the current work without becoming permanent. A later correction can
-replace a lasting rule; "forget that rule" removes the identified learned entry.
-"Don't save this" keeps a correction out of persistent learning.
-"Stop remembering my corrections" pauses feedback collection for the project;
-the agent records only that pause so later agents honor it. Ask to resume when
-ready, or explicitly ask it to remember a particular rule.
-
-This updates project instructions, not the AI model or everyone's shared Yummy
-skill. The shared skill changes only on an explicit request. Learning requires
-access to the actual project files; agents must say when a correction was not
-saved. Setup never overwrites existing instructions to add learning behavior.
-
 ## Setup and later work
 
 `/yummy` creates missing files and folders only. It never edits or relocates

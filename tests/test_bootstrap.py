@@ -238,10 +238,45 @@ class BootstrapTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             helper.bootstrap(link, SOURCE)
 
-    def test_foundation_bundle_separates_feedback_learning(self):
-        self.assertNotIn("references/learning.md", helper.PACKAGE)
-        self.assertNotIn("Learn from user feedback", (SOURCE / "SKILL.md").read_text(encoding="utf-8"))
-        self.assertTrue((REPO / "skills/yummy-learning/SKILL.md").is_file())
+    def test_hermes_variant_is_separate_and_portable_skill_keeps_learning(self):
+        self.assertIn("references/learning.md", helper.PACKAGE)
+        portable_skill = (SOURCE / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("Learn from user feedback", portable_skill)
+
+        hermes_source = REPO / "skills/yummy-hermes"
+        hermes_skill_path = hermes_source / "SKILL.md"
+        self.assertTrue(hermes_skill_path.is_file())
+        self.assertFalse((hermes_source / "references/learning.md").exists())
+        spec = importlib.util.spec_from_file_location(
+            "yummy_hermes_bootstrap", hermes_source / "scripts/bootstrap.py"
+        )
+        if spec is None:
+            self.fail("Could not load the Hermes variant helper")
+        hermes_helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(hermes_helper)
+        self.assertNotIn("references/learning.md", hermes_helper.PACKAGE)
+        hermes_skill = hermes_skill_path.read_text(encoding="utf-8")
+        self.assertNotIn("Learn from user feedback", hermes_skill)
+
+        intentionally_different = {
+            "SKILL.md",
+            "assets/foundation/AGENTS.md",
+            "assets/foundation/README.md",
+            "assets/work/TASK-TEMPLATE.md",
+            "references/foundation.md",
+            "references/learning.md",
+            "scripts/bootstrap.py",
+        }
+        for name in set(helper.PACKAGE) - intentionally_different:
+            with self.subTest(bundle_file=name):
+                self.assertEqual(
+                    (SOURCE / name).read_bytes(), (hermes_source / name).read_bytes()
+                )
+
+        report = hermes_helper.bootstrap(self.root, hermes_source, host="universal")
+        self.assertEqual(report["result"], "complete")
+        installed_learning = self.root / ".agents/skills/yummy/references/learning.md"
+        self.assertFalse(installed_learning.exists())
 
     def test_package_is_complete_and_refuses_to_replace_archive(self):
         path = Path(self.temp.name) / "yummy.zip"

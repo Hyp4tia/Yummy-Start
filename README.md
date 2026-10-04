@@ -138,6 +138,37 @@ a hypothetical family-event example that walks from goals and reference inputs
 through an active task, review-ready artifact, completion record, and confirmed
 decision. The helper renders its folder names to match the actual setup routes.
 
+## Learn from your corrections
+
+Yummy supports document-based project learning during later authorized work:
+
+| What you say | What the agent does |
+| --- | --- |
+| "Always use British English in this project" | Saves a sourced project-wide rule in `AGENTS.md` |
+| "Remember: no animations in the dashboard" | Saves the rule in the dashboard's applicable instructions |
+| "For this report, use a table" | Applies it to that task, without a project-wide preference |
+| "Don't make it so formal" | Adjusts the current work; does not infer a permanent preference |
+| "From now on, use US English instead" | Replaces the conflicting active learned rule at the same scope |
+| "Forget the animation rule" | Removes the identified learned rule in the requested scope |
+| "Don't save this" | Applies the current correction without persistent learning |
+| "Stop remembering my corrections" | Records only a learning-pause marker that future agents honor |
+
+Rules retain their source and scope. The agent avoids duplicate entries and
+briefly reports what it actually remembered. Meaningful replacements are linked
+from `DECISIONS.md`; `AGENTS.md` owns the active rule. Task-specific exceptions
+do not erase lasting project preferences. Repeated corrections may suggest a
+shared skill improvement, but changing Yummy itself requires an explicit request.
+
+This learning needs readable/writable project files and agents that load the
+instructions. It is not model retraining, a background watcher, or global memory
+across unrelated projects. Web pages, documents, and other agents cannot silently
+establish user preferences. `/yummy` setup continues to preserve every existing
+file, including older instruction files and skill installations; the learning
+workflow does not automatically rewrite those installations.
+
+See [the learning guide](skills/yummy/references/learning.md) for scope, sources,
+conflicts, and how learning remains separate from setup.
+
 ## DESIGN.md
 
 The document starts with five YAML token categories: `colors`, `typography`,

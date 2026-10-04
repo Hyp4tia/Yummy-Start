@@ -100,6 +100,15 @@ that would clutter root instructions. The local file states its scope and what
 it adds to ancestor guidance. Existing local instructions remain untouched.
 Create deeper rules only when another distinct workflow makes them useful.
 
+## Project learning
+
+During later authorized work, use [the learning guide](learning.md) to turn clear
+lasting human feedback into scoped `AGENTS.md` rules. Task-specific corrections
+stay in the task record; ambiguous feedback is applied without permanent storage.
+Keep source and scope, deduplicate rules, handle replacement/forgetting, and
+confirm actual persistence. Setup remains create-only. Shared skill changes are
+a separately requested task; no new top-level memory document is required.
+
 ## Verification
 
 Before setup, inventory occupied destinations and retain hashes of existing

@@ -1,6 +1,6 @@
 ---
 name: yummy
-description: Set up a universal project foundation with operating rules, goals, status, decisions, design evidence, and organized work folders. Use for /yummy or requests to initialize this foundation in a new or existing project without changing existing files.
+description: Set up a universal project foundation without changing existing files, and carry clear user preferences into scoped project instructions during later authorized work. Use for /yummy setup or requests to remember, correct, or forget a Yummy project rule.
 license: MIT
 ---
 
@@ -106,3 +106,22 @@ record a concrete next action and blockers, verify completion criteria, and link
 to deliverables. A task record in `work/completed/` documents completion; an
 artifact in `outputs/` is the usable result. Neither must duplicate the other.
 Use the project's existing work system when present instead of adding a rival log.
+
+## Learn from user feedback
+
+During later authorized work, apply direct user corrections immediately. Read
+[the learning guide](references/learning.md) when a user asks to remember,
+correct, or forget a rule, or gives feedback whose duration or scope matters.
+Persist clearly lasting preferences in the appropriate root or area `AGENTS.md`;
+keep task-specific corrections in that task's record. Ambiguous feedback applies
+to the current work without becoming a permanent rule. Retain source and scope,
+replace conflicting active learned rules only at the same scope, and briefly
+tell the user what was actually saved. Existing project instructions still apply.
+
+During setup, lasting feedback may inform a newly created instruction file, but
+existing files remain untouched. Never silently update installed skills, global
+memory, host settings, or the shared Yummy repository as a learning side effect.
+Repeated feedback can justify a suggestion; changing the shared skill itself
+requires an explicit request. This is document-based project learning, not model
+retraining or a background watcher. It persists only where the host can actually
+write the project records and future agents read them.

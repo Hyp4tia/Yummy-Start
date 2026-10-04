@@ -31,6 +31,13 @@ tracked follow-up; do not hide unfinished required work behind completed status.
 
 Record known blockers, who or what can resolve them if known, or none confirmed.
 
+## Task-specific user instructions
+
+Record direct corrections or requirements limited to this task, with a short
+source quote or paraphrase and their scope. A task-specific exception does not
+replace a lasting project rule. Link to applicable lasting rules in `AGENTS.md`
+instead of copying them. Do not promote ambiguous feedback to a permanent rule.
+
 ## Sources and decisions
 
 Link to inputs, existing work, and relevant entries in `DECISIONS.md`.

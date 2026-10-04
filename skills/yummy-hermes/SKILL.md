@@ -1,6 +1,6 @@
 ---
-name: yummy
-description: Set up a universal project foundation with a create-only workflow that preserves every existing file. Use for /yummy when a user wants a fresh project scaffold.
+name: yummy-hermes
+description: Set up a universal project foundation with a create-only workflow that preserves every existing file. Use for /yummy-hermes when a user wants a fresh project scaffold.
 license: MIT
 ---
 
@@ -10,9 +10,9 @@ Distributed under the [MIT license](assets/LICENSE).
 
 Build a small, useful foundation for any project: business, family, research,
 content, software, or another kind of work. Specialize only when the project
-earns the complexity. Treat `/yummy` as a request to run this workflow once the
-host has loaded these instructions. Native command registration is host-specific;
-see [portability](references/portability.md).
+earns the complexity. Treat `/yummy-hermes` as a request to run this
+workflow once the host has loaded these instructions. Native command
+registration is host-specific; see [portability](references/portability.md).
 
 ## Setup boundary
 

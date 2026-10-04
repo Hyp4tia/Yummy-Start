@@ -256,15 +256,28 @@ class BootstrapTests(unittest.TestCase):
         spec.loader.exec_module(hermes_helper)
         self.assertNotIn("references/learning.md", hermes_helper.PACKAGE)
         hermes_skill = hermes_skill_path.read_text(encoding="utf-8")
+        self.assertIn("name: yummy-hermes", hermes_skill)
+        self.assertIn("Use for /yummy-hermes", hermes_skill)
+        self.assertIn(
+            "skills/yummy-hermes` | `/yummy-hermes`",
+            (REPO / "README.md").read_text(encoding="utf-8"),
+        )
+        portability = (hermes_source / "references/portability.md").read_text(encoding="utf-8")
+        foundation_docs = (hermes_source / "references/foundation.md").read_text(encoding="utf-8")
+        self.assertIn("Then invoke `/yummy-hermes`", portability)
+        self.assertIn(".agents/skills/yummy/", foundation_docs)
         self.assertNotIn("Learn from user feedback", hermes_skill)
 
         intentionally_different = {
             "SKILL.md",
+            "agents/openai.yaml",
             "assets/foundation/AGENTS.md",
             "assets/foundation/README.md",
+            "assets/foundation/STATUS.md",
             "assets/work/TASK-TEMPLATE.md",
             "references/foundation.md",
             "references/learning.md",
+            "references/portability.md",
             "scripts/bootstrap.py",
         }
         for name in set(helper.PACKAGE) - intentionally_different:

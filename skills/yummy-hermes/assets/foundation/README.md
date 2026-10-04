@@ -55,8 +55,8 @@ already exists; link to it instead of making duplicate task records.
 
 As part of authorized project work, update the task record and the short status
 overview. Record important confirmed choices in `DECISIONS.md`. Task-state moves
-inside `{{work}}/` are separate from `/yummy` setup and must be within the work's
-authorized scope. Update links when a record's location changes. Do not mark a
+inside `{{work}}/` are separate from `/yummy-hermes` setup and must be within the
+work's authorized scope. Update links when a record's location changes. Do not mark a
 task completed until its stated completion criteria are verified.
 
 ## Example: a family event
@@ -74,8 +74,8 @@ This is an illustration, not work added to your project:
 
 ## Setup and later work
 
-`/yummy` creates missing files and folders only. It never edits or relocates
-existing material. If this project already uses older folder names, keep them
+`/yummy-hermes` creates missing files and folders only. It never edits or
+relocates existing material. If this project already uses older folder names, keep them
 and use the routes selected during setup. Preserve an existing README as well.
 Later authorized tasks may maintain project records within their own scope;
 neither setup nor the existence of this guide grants blanket editing permission.

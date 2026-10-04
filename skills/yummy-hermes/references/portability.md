@@ -23,11 +23,11 @@ Official reference: [Claude Code skills](https://code.claude.com/docs/en/skills)
 For initial installation, use the supported skills command:
 
 ```sh
-hermes skills install Hyp4tia/Yummy-Start/skills/yummy
+hermes skills install Hyp4tia/Yummy-Start/skills/yummy-hermes
 ```
 
-Then invoke `/yummy` in the target workspace. Current Hermes versions also find
-project-local `.agents/skills/` in Git checkouts after the user trusts the project.
+Then invoke `/yummy-hermes` in the target workspace. Current Hermes versions
+also find project-local `.agents/skills/` in Git checkouts after the user trusts the project.
 Explain `hermes skills trust` if needed; do not run it or change global trust
 configuration as part of setup. In non-Git folders, use the already installed
 Hermes skill; the copied local bundle remains portable without initializing Git.

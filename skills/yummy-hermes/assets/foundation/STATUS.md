@@ -27,4 +27,5 @@ to the owning task record for details. Record confirmed decisions in
 ## Evidence and last review
 
 No project-state sources or review date recorded yet. Keep this overview current
-as part of separately authorized work; `/yummy` setup preserves existing files.
+as part of separately authorized work; `/yummy-hermes` setup preserves
+existing files.

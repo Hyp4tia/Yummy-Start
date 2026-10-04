@@ -27,7 +27,7 @@ copies and creates missing foundation paths in the selected project.
 | Assistant | Install/load | Invoke |
 | --- | --- | --- |
 | Claude Code | Put the whole `skills/yummy/` bundle in the project's `.claude/skills/yummy/` | `/yummy` |
-| Hermes Agent | `hermes skills install Hyp4tia/Yummy-Start/skills/yummy-hermes` | `/yummy` |
+| Hermes Agent | `hermes skills install Hyp4tia/Yummy-Start/skills/yummy-hermes` | `/yummy-hermes` |
 | ChatGPT with skills | Use the supported skill installer/selector; local authoring is supported in the desktop app | Select `@yummy`; `/yummy` is a conversational alias once loaded |
 | Codex | Install `skills/yummy`; local project destination is `.agents/skills/yummy/` | `$yummy` or `/skills` |
 | Claude chat or another AI | Upload the complete skill ZIP if supported, or supply the bundle as instructions | Ask it to follow Yummy; native command support depends on the host |
@@ -225,8 +225,8 @@ Claude Code, ChatGPT, Codex, and other harnesses. Its references and assets are
 the canonical bundle, and `scripts/package.py` packages it unchanged.
 `skills/yummy-hermes/` is the Hermes-install variant. It keeps Yummy setup
 create-only and omits the separate project-learning instructions that Hermes'
-security scanner blocks. Both use the `/yummy` command. `tests/` checks setup
-preservation and keeps the variants distinct.
+security scanner blocks. `tests/` checks setup preservation and keeps the invocation
+names distinct: `/yummy` for the portable bundle and `/yummy-hermes` for Hermes.
 
 ```sh
 python -B -m unittest discover -s tests -v

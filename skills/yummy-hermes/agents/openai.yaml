@@ -1,4 +1,4 @@
 interface:
-  display_name: "Yummy"
+  display_name: "Yummy Hermes"
   short_description: "Set up any project while preserving existing files"
-  default_prompt: "Use $yummy to set up this project's foundation without changing existing files."
+  default_prompt: "Use $yummy-hermes to set up this project's foundation without changing existing files."

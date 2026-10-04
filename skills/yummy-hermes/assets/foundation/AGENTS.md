@@ -41,8 +41,8 @@ system. Create local `AGENTS.md` only when distinct rules justify the complexity
 
 ## Setup versus authorized ongoing work
 
-`/yummy` setup creates missing paths only. Preserve all existing files and their
-locations, including these documents, code, assets, configuration, and installed
+`/yummy-hermes` setup creates missing paths only. Preserve all existing files
+and their locations, including these documents, code, assets, configuration, and installed
 skills. Never append, overwrite, move, rename, delete, or reformat existing
 material during setup. Reuse existing legacy folder names and report conflicts.
 

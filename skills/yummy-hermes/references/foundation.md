@@ -84,8 +84,8 @@ Read applicable root, ancestor, and local `AGENTS.md`; then `PROJECT.md` and
 `STATUS.md`; then the current task. Read relevant decisions when choices matter
 and design guidance for visual work. Load other area guidance/resources as needed.
 
-The create-only boundary applies to `/yummy` setup. Later authorized work can
-maintain affected task records, the short status overview, and confirmed choices
+The create-only boundary applies to `/yummy-hermes` setup. Later authorized work
+can maintain affected task records, the short status overview, and confirmed choices
 within its scope and existing project rules. State changes should preserve a
 task's ID and filename and update affected links. Verify completion criteria and
 record evidence before marking completed. Setup alone authorizes none of these
